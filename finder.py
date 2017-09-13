@@ -1,6 +1,7 @@
 import os
 import glob
 import sys
+import shutil
 
 class role():
 
@@ -63,11 +64,31 @@ class role():
             for file in files:
                 print(file)
             start = role(a)
-            start.login()
-
+            start.search_file()
 
     def delete_directory(self,a):
-        print(a)
+        self.input_dir = input('enter a directory or file name want to delete (enter q to exit) : ')
+
+        if self.input_dir == 'q':
+            start = role(a)
+            start.login()
+        else : pass
+
+        try:
+            os.rmdir(a + '\\' + self.input_dir)
+            print('delete clearly')
+            self.delete_directory(a)
+
+        except OSError:
+            self.input_select = input('enter y or n (y is delete, n is dont delete : ')
+            if self.input_select == 'y':
+                shutil.rmtree(a + '\\' + self.input_dir)
+                self.delete_directory(a)
+            else:
+                self.delete_directory(a)
+
+
+
 
     def quit(self,a):
         sys.exit()
