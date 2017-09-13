@@ -1,5 +1,6 @@
 import os
-
+import glob
+import sys
 
 class role():
 
@@ -36,6 +37,9 @@ class role():
 
         if not os.path.isdir(self.input_path):
             print('That is wrong dir')
+            a = os.getcwd()
+            start = role(a)
+            start.login()
 
         if self.input_path == '..':
             os.chdir("..")
@@ -51,10 +55,19 @@ class role():
             start.login()
 
     def search_file(self,a):
-        print(self.curr_path)
+        self.input_path = input('enter a directory for searching (enter q to exit) : ')
+        if self.input_path == 'q':
+            self.quit(a)
+        else:
+            files = glob.iglob(a + '\\' + '**' + '\\' + '*' + self.input_path + '*' + '\\' + '*', recursive=True)
+            for file in files:
+                print(file)
+            start = role(a)
+            start.login()
+
 
     def delete_directory(self,a):
-        pass
+        print(a)
 
     def quit(self,a):
-        print(a)
+        sys.exit()
