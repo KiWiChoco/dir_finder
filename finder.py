@@ -48,23 +48,31 @@ class role():
 
         if os.path.isdir(self.input_path):
             os.chdir(a + '\\' + self.input_path)
-            #print(os.getcwd())
             a = os.getcwd()
-            print(a)
-            print(os.listdir(a))
+            #print(a)
+            #print(os.listdir(a))
+            try:
+                os.listdir(a)
+                print(os.listdir(a))
+            except PermissionError:
+                os.chdir("..")
+                ch_path = os.getcwd()
+                print(os.listdir(ch_path))
+
             start = role(a)
             start.login()
 
     def search_file(self,a):
         self.input_path = input('enter a directory for searching (enter q to exit) : ')
         if self.input_path == 'q':
-            self.quit(a)
+            start = role(a)
+            start.login()
         else:
             files = glob.iglob(a + '\\' + '**' + '\\' + '*' + self.input_path + '*' + '\\' + '*', recursive=True)
             for file in files:
                 print(file)
             start = role(a)
-            start.search_file()
+            start.search_file(a)
 
     def delete_directory(self,a):
         self.input_dir = input('enter a directory or file name want to delete (enter q to exit) : ')
@@ -72,7 +80,7 @@ class role():
         if self.input_dir == 'q':
             start = role(a)
             start.login()
-        else : pass
+        else: pass
 
         try:
             os.rmdir(a + '\\' + self.input_dir)
